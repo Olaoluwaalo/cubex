@@ -19,6 +19,14 @@ class CountryDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return GenericScreen(
       appBar: AppBar(
+        leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.white,
+            )),
         title: boldText(
           text: countryName,
           fontSize: 20.sp,
@@ -53,12 +61,14 @@ class CountryDetailScreen extends StatelessWidget {
                 ],
               );
             } else if (state is CountryError) {
-              return ReloadButton(errorMessage:  "An error occurred: ${state.message}", onReload: () {
-                        context
-                            .read<CountryBloc>()
-                            .add(FetchCountryDetails(countryName));
-                      },);
-              
+              return ReloadButton(
+                errorMessage: "An error occurred: ${state.message}",
+                onReload: () {
+                  context
+                      .read<CountryBloc>()
+                      .add(FetchCountryDetails(countryName));
+                },
+              );
             }
             return const Center(child: Text('No data available'));
           },
